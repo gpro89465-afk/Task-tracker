@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
+
+    <meta name="theme-color" content="#05080d">
+    <meta name="color-scheme" content="dark">
+
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2714%27 fill=%27%2305080d%27/%3E%3Cpath d=%27M16 33l10 10 22-24%27 fill=%27none%27 stroke=%27%2300e5ff%27 stroke-width=%278%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E">
+
+    <title>Task Reports</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <header>
+
+        <div>
+
+            <h1>PERFORMANCE REPORT</h1>
+
+            <p>PRODUCTIVITY ANALYTICS</p>
+
+        </div>
+
+        <button
+            class="secondary-btn"
+            onclick="location.href='index.html'"
+        >
+            ← DASHBOARD
+        </button>
+
+    </header>
+
+
+    <!-- MAIN STATS -->
+
+    <section class="stats">
+
+        <div class="card">
+
+            <span>TODAY</span>
+
+            <strong id="todayScore">
+                0%
+            </strong>
+
+        </div>
+
+
+        <div class="card">
+
+            <span>7 DAY AVG</span>
+
+            <strong id="weekScore">
+                0%
+            </strong>
+
+        </div>
+
+
+        <div class="card">
+
+            <span>30 DAY AVG</span>
+
+            <strong id="monthScore">
+                0%
+            </strong>
+
+        </div>
+
+
+        <div class="card">
+
+            <span>CURRENT STREAK</span>
+
+            <strong id="currentStreak">
+                0
+            </strong>
+
+        </div>
+
+    </section>
+
+
+    <!-- DAILY GOAL -->
+
+    <section class="report">
+
+        <h2>DAILY TARGET</h2>
+
+        <p class="section-subtitle">
+            Current target:
+            <strong id="reportGoal">80%</strong>
+        </p>
+
+    </section>
+
+
+    <!-- WEEKLY CHART -->
+
+    <section class="report weekly-report">
+
+        <div class="section-heading">
+            <div>
+                <h2>LAST 7 DAYS</h2>
+                <p class="section-subtitle">
+                    A closer look at your daily productivity.
+                </p>
+            </div>
+            <div class="weekly-average">
+                <span>WEEK AVERAGE</span>
+                <strong id="weeklyAverage">0%</strong>
+            </div>
+        </div>
+
+        <div class="weekly-chart-shell">
+            <div class="weekly-chart-axis" aria-hidden="true">
+                <span>100%</span>
+                <span>75%</span>
+                <span>50%</span>
+                <span>25%</span>
+                <span>0%</span>
+            </div>
+            <div class="weekly-chart-plot">
+                <div class="weekly-goal-line" aria-hidden="true">
+                    <span>GOAL <strong id="weeklyGoalLabel">80%</strong></span>
+                </div>
+                <div
+                    class="chart weekly-chart"
+                    id="weeklyChart"
+                    role="img"
+                    aria-label="Daily productivity scores for the last seven days"
+                ></div>
+            </div>
+        </div>
+
+        <div class="weekly-chart-legend">
+            <span><i class="legend-bar"></i> DAILY SCORE</span>
+            <span><i class="legend-goal"></i> DAILY TARGET</span>
+        </div>
+
+    </section>
+
+
+    <!-- CONSISTENCY -->
+
+    <section class="report">
+
+        <h2>TASK CONSISTENCY</h2>
+
+        <div id="taskConsistency"></div>
+
+    </section>
+
+
+    <!-- ACTIVITY -->
+
+    <section class="report">
+
+        <div class="section-heading">
+            <div>
+                <h2>30 DAY ACTIVITY</h2>
+                <p class="section-subtitle">
+                    Select any day to view its report.
+                </p>
+            </div>
+        </div>
+
+        <div id="activityCalendar" aria-label="Activity calendar for the last 30 days"></div>
+
+    </section>
+
+    <dialog class="day-report-dialog" id="dayReportDialog" aria-labelledby="dayReportTitle">
+        <div class="day-report-content">
+            <button class="day-report-close secondary-btn" id="closeDayReport" type="button" aria-label="Close">
+                &times;
+            </button>
+            <p class="day-report-eyebrow" id="dayReportEyebrow">DATE SELECTED</p>
+            <h2 id="dayReportTitle"></h2>
+
+            <div id="dayReportPrompt">
+                <p class="section-subtitle">Would you like to see this day's report?</p>
+                <div class="day-report-actions">
+                    <button class="secondary-btn" id="cancelDayReport" type="button">CANCEL</button>
+                    <button id="seeDayReport" type="button">SEE REPORT</button>
+                </div>
+            </div>
+
+            <div id="dayReportDetails" hidden>
+                <div class="day-report-score">
+                    <span>PRODUCTIVITY</span>
+                    <strong id="dayReportScore">0%</strong>
+                </div>
+                <p class="day-report-summary" id="dayReportSummary"></p>
+                <ul class="day-report-tasks" id="dayReportTasks"></ul>
+                <p class="day-report-empty" id="dayReportEmpty" hidden>No tasks were set up for this day.</p>
+            </div>
+        </div>
+    </dialog>
+
+
+    <!-- ADVANCED ANALYTICS -->
+
+    <section class="report">
+
+        <h2>ADVANCED ANALYTICS</h2>
+
+        <div class="analytics-grid">
+
+            <div class="analytics-card">
+
+                <span>
+                    PRODUCTIVE DAYS
+                </span>
+
+                <strong id="productiveDays">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="analytics-card">
+
+                <span>
+                    BEST DAY
+                </span>
+
+                <strong id="bestDay">
+                    —
+                </strong>
+
+            </div>
+
+
+            <div class="analytics-card">
+
+                <span>
+                    MOST CONSISTENT TASK
+                </span>
+
+                <strong id="bestTask">
+                    —
+                </strong>
+
+            </div>
+
+
+            <div class="analytics-card">
+
+                <span>
+                    TOTAL COMPLETIONS
+                </span>
+
+                <strong id="totalCompletions">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- STREAK -->
+
+    <section class="report">
+
+        <h2>STREAK RECORD</h2>
+
+        <div class="stats">
+
+            <div class="card">
+
+                <span>
+                    CURRENT STREAK
+                </span>
+
+                <strong id="currentStreak2">
+                    0 DAYS
+                </strong>
+
+            </div>
+
+
+            <div class="card">
+
+                <span>
+                    BEST STREAK
+                </span>
+
+                <strong id="bestStreak2">
+                    0 DAYS
+                </strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+<script src="reports.js"></script>
+
+</body>
+
+</html>

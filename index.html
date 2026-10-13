@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#05080d">
+    <meta name="color-scheme" content="dark">
+    <meta name="description" content="Task Command Center: a personal productivity tracker with daily goals, streaks and reports.">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2714%27 fill=%27%2305080d%27/%3E%3Cpath d=%27M16 33l10 10 22-24%27 fill=%27none%27 stroke=%27%2300e5ff%27 stroke-width=%278%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E">
+
+    <title>Task Command Center</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="dashboard-page">
+
+<div class="container">
+
+    <header class="dashboard-hero">
+        <div class="dashboard-hero-copy">
+            <span class="hero-kicker">
+                <i></i>
+                YOUR DAILY COMMAND CENTER
+            </span>
+            <h1>TASK COMMAND CENTER</h1>
+            <p>PERSONAL PRODUCTIVITY SYSTEM</p>
+        </div>
+
+        <div class="header-actions">
+            <div class="date" id="date"></div>
+
+            <div class="header-buttons">
+                <button class="secondary-btn"
+                        onclick="location.href='reports.html'">
+                    VIEW REPORT
+                </button>
+            </div>
+        </div>
+    </header>
+
+
+    <!-- ADD TASK -->
+
+    <section class="add-task">
+
+        <input
+            type="text"
+            id="taskInput"
+            placeholder="Enter task..."
+        >
+
+        <select id="categoryInput">
+            <option value="PERSONAL">PERSONAL</option>
+            <option value="GATE">GATE</option>
+            <option value="CODING">CODING</option>
+            <option value="FITNESS">FITNESS</option>
+            <option value="STUDY">STUDY</option>
+            <option value="OTHER">OTHER</option>
+        </select>
+
+        <select id="priorityInput">
+            <option value="HIGH">HIGH</option>
+            <option value="MEDIUM" selected>MEDIUM</option>
+            <option value="LOW">LOW</option>
+        </select>
+
+        <label class="task-hours-input">
+            <span>EST. HOURS</span>
+            <input
+                type="number"
+                id="taskHoursInput"
+                min="0.25"
+                max="24"
+                step="0.25"
+                value="1"
+                required
+                aria-label="Estimated task hours"
+            >
+        </label>
+
+        <button onclick="addTask()">
+            ADD TASK
+        </button>
+
+    </section>
+
+
+    <!-- DAILY GOAL -->
+
+    <section class="goal-section">
+
+        <div class="goal-header">
+            <div>
+                <span class="section-label">
+                    DAILY GOAL
+                </span>
+
+                <strong id="goalText">
+                    80%
+                </strong>
+            </div>
+
+            <div class="goal-control">
+                <label for="goalInput">
+                    TARGET
+                </label>
+
+                <input
+                    type="number"
+                    id="goalInput"
+                    min="1"
+                    max="100"
+                    value="80"
+                >
+
+                <button onclick="saveGoal()">
+                    SAVE
+                </button>
+            </div>
+        </div>
+
+        <div class="progress goal-progress">
+            <div id="goalProgressBar"></div>
+        </div>
+
+    </section>
+
+
+    <!-- STATS -->
+
+    <section class="stats">
+
+        <div class="card">
+            <span>TODAY'S SCORE</span>
+            <strong id="score">0%</strong>
+        </div>
+
+        <div class="card">
+            <span>COMPLETED</span>
+            <strong id="completed">0</strong>
+        </div>
+
+        <div class="card">
+            <span>TOTAL TASKS</span>
+            <strong id="total">0</strong>
+        </div>
+
+        <div class="card">
+            <span>STREAK</span>
+            <strong id="streak">0 DAYS</strong>
+        </div>
+
+    </section>
+
+
+    <!-- TASKS -->
+
+    <section class="tasks">
+
+        <div class="section-heading">
+            <div>
+                <h2>TODAY'S TASKS</h2>
+                <p class="section-subtitle">
+                    Complete at least your daily target to maintain your streak.
+                </p>
+            </div>
+
+            <div id="taskCount" class="task-count">
+                0 TASKS
+            </div>
+        </div>
+
+        <div class="task-overview">
+            <div class="task-overview-copy">
+                <strong id="taskSummary">0 of 0 tasks complete</strong>
+                <span id="taskTimeSummary">0h complete · 0h planned</span>
+            </div>
+            <div
+                class="task-overview-track"
+                role="meter"
+                aria-label="Today's task completion"
+                aria-valuemin="0"
+                aria-valuemax="0"
+                aria-valuenow="0"
+            >
+                <span id="taskCompletionBar"></span>
+            </div>
+        </div>
+
+        <div id="taskList"></div>
+
+    </section>
+
+
+    <!-- PERFORMANCE -->
+
+    <section class="report">
+
+        <h2>PERFORMANCE</h2>
+
+        <div class="progress">
+            <div id="progressBar"></div>
+        </div>
+
+        <h3 id="performanceStatus">
+            NO DATA
+        </h3>
+
+        <p id="reportText">
+            Start completing tasks to generate your report.
+        </p>
+
+    </section>
+
+
+    <!-- QUICK ANALYTICS -->
+
+    <section class="report">
+
+        <div class="section-heading">
+            <div>
+                <h2>QUICK ANALYTICS</h2>
+                <p class="section-subtitle">
+                    Your productivity at a glance.
+                </p>
+            </div>
+        </div>
+
+        <div class="analytics-grid">
+
+            <div class="analytics-card">
+                <span>PRODUCTIVE DAYS</span>
+                <strong id="productiveDays">0</strong>
+            </div>
+
+            <div class="analytics-card">
+                <span>BEST DAY</span>
+                <strong id="bestDay">—</strong>
+            </div>
+
+            <div class="analytics-card">
+                <span>BEST TASK</span>
+                <strong id="bestTask">—</strong>
+            </div>
+
+            <div class="analytics-card">
+                <span>TOTAL COMPLETIONS</span>
+                <strong id="totalCompletions">0</strong>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- BACKUP -->
+
+    <section class="report backup-section">
+
+        <div class="section-heading">
+            <div>
+                <h2>BACKUP</h2>
+                <p class="section-subtitle">
+                    Data is stored in this browser only. Export a backup to
+                    keep it safe or move it to another device or browser.
+                </p>
+            </div>
+
+            <div class="backup-actions">
+                <button class="secondary-btn" onclick="exportData()">
+                    EXPORT
+                </button>
+
+                <button class="secondary-btn"
+                        onclick="document.getElementById('importFile').click()">
+                    IMPORT
+                </button>
+
+                <input
+                    type="file"
+                    id="importFile"
+                    accept="application/json,.json"
+                    hidden
+                    onchange="importData(event)"
+                >
+            </div>
+        </div>
+
+    </section>
+
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>
